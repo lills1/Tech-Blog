@@ -27,18 +27,26 @@ const signupFormHandler = async (event) => {
 
   const username = document.querySelector('#username-signup').value.trim();
   const password = document.querySelector('#password-signup').value.trim();
+  if (password.length < 8) {
+    alert("You must enter at least 8 characters")
+  } else {
 
-  if (username && password) {
-    const response = await fetch('/api/users', {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
-      headers: { 'Content-Type': 'application/json' },
-    });
+    if (username && password) {
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+        headers: { 'Content-Type': 'application/json' },
+      });
 
-    if (response.ok) {
-      document.location.replace('/profile');
-    } else {
-      alert(response.statusText);
+      if (response.ok) {
+        document.location.replace('/profile');
+      } else {
+        if (false) { //response.error.message == "username must be unique") {
+          alert("User already exists")
+        } else {
+          alert(response.statusText);
+        }
+      }
     }
   }
 };
