@@ -1,6 +1,29 @@
 const router = require('express').Router();
-const { Post } = require('../../models');
+const { Post, User } = require('../../models');
 const withAuth = require('../../utils/auth');
+
+router.get('/', (req, res) => {
+  Post.findAll({
+    include: [{
+      model: User
+    }]
+  }).then(data => {
+    console.log(data);
+    res.json(data)
+  })
+});
+
+//find a single post by id
+router.get('/:id', (req, res) => {
+  Post.findByPk(req.params.id, {
+    include: [{
+      model: User
+    }]
+  }).then(data => {
+    console.log(data);
+    res.json(data)
+  })
+});
 
 router.post('/', async (req, res) => {
   try {
@@ -15,24 +38,28 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
-  try {
-    const postData = await Post.destroy({
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
-    });
-
-    if (!postData) {
-      res.status(404).json({ message: 'No post found with this id!' });
-      return;
+router.put('/:id', (req, res) => {
+  Post.update(req.body, {
+    where: {
+      id: req.params.id
     }
+  })
+    .then(data => {
+      console.log(data);
+      res.json(data)
+    })
+});
 
-    res.status(200).json(postData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+router.delete('/:id', (req, res) => {
+  Post.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+    .then(data => {
+      console.log(data);
+      res.json(data)
+    })
 });
 
 module.exports = router;
