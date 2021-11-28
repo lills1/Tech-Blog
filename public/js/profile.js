@@ -37,6 +37,23 @@ const delButtonHandler = async (event) => {
   }
 };
 
+const UpdateButtonHandler = async (event) => {
+  alert.console("running updateNuttonJa:")
+  if (event.target.hasAttribute('data-id')) {
+    const id = event.target.getAttribute('data-id');
+
+    const response = await fetch(`/api/post/${id}`, {
+      method: 'PUT',
+    });
+
+    if (response.ok) {
+      document.location.replace('/profile');
+    } else {
+      alert('Failed to update post');
+    }
+  }
+};
+
 document
   .querySelector('.new-blog-form')
   .addEventListener('submit', newFormHandler);
@@ -44,3 +61,7 @@ document
 document
   .querySelector('.post-list')
   .addEventListener('click', delButtonHandler);
+
+document
+  .querySelector('.update')
+  .addEventListener('click', UpdateButtonHandler);
