@@ -26,7 +26,7 @@ Comment.init(
         key: 'id',
       },
     },
-    review_id: {
+    post_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'post',
