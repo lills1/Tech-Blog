@@ -5,6 +5,7 @@
   ## Table of Contents 
   - [Usage](#usage)
   - [Access](#access)
+  - [Preview](#preview)
   - [Technologies Used](technologies)
   - [License](#license)
   - [Extension ideas](#Extensions)
@@ -15,6 +16,8 @@
   Anything tech related to post about
   ## Access
   Access using this link: https://murmuring-plains-04720.herokuapp.com/
+  ## Preview
+  <img src="https://github.com/lills1/Tech-Blog/blob/main/murmuring-plains-04720.herokuapp.com_profile.png">
   ## Technologies
   - Heroku
   - MySql
