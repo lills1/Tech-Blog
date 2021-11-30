@@ -1,60 +1,60 @@
-// const newFormHandler = async (event) => {
-//     event.preventDefault();
+const CommentButtonHandler = async (event) => {
+    //event.preventDefault();
+    console.log("called: CommentButtonHandler");
+    const comment = document.querySelector('#edit-post-comment').value.trim();
+    //const id = event.target.getAttribute('data-id');
+    const id = this.getAttribute('data-id');
 
-//     const title = document.querySelector('#post-title').value.trim();
-//     const content = document.querySelector('#post-content').value.trim();
+    const response = await fetch(`/api/comment/${id}`, {
+        method: 'POST',
+        body: JSON.stringify({ comment }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
 
-//     if (title && content) {
-//         const response = await fetch(`/api/comment`, {
-//             method: 'POST',
-//             body: JSON.stringify({ title, content }),
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//         });
+    if (response.ok) {
+        document.location.replace('/');
+    } else {
+        alert('Failed to update post');
+    }
+};
 
-//         if (response.ok) {
-//             document.location.replace('/comment');
-//         } else {
-//             alert('Failed to create comment');
-//         }
-//     }
-// };
+function postComment(formId) {
+    //event.preventDefault();
+    console.log("called:postComment");
+    let formElem = document.getElementById(formId);
+    let comment = formElem.post_comment.value.trim();
+    //const id = event.target.getAttribute('data-id');
+    let id = formId.substring(5);
+    console.log(`id:${id} comment:${comment} id:${id}`);
+    const response = fetch('/api/comment/' + id, {
+        method: 'POST',
+        body: JSON.stringify({ comment }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
 
-// const delButtonHandler = async (event) => {
-//     if (event.target.hasAttribute('data-id')) {
-//         const id = event.target.getAttribute('data-id');
+    if (response.ok || true) {
+        document.location.replace('/');
+    }
+};
 
-//         const response = await fetch(`/api/comment/${id}`, {
-//             method: 'DELETE',
-//         });
+function delComment(id) {
+    {
+        const response = fetch(`/api/comment/${id}`, {
+            method: 'DELETE',
+        });
 
-//         if (response.ok) {
-//             document.location.replace('/profile');
-//         } else {
-//             alert('Failed to delete post');
-//         }
-//     }
-// };
+        if (response.ok || true) {
+            document.location.replace('/?');
+        }
+    }
+};
 
-// const UpdateButtonHandler = async (event) => {
-//     alert.console("running updateNuttonJa:")
-//     if (event.target.hasAttribute('data-id')) {
-//         const id = event.target.getAttribute('data-id');
 
-//         const response = await fetch(`/api/comment/${id}`, {
-//             method: 'PUT',
-//         });
 
-//         if (response.ok) {
-//             document.location.replace('/comment');
-//         } else {
-//             alert('Failed to update post');
-//         }
-//     }
-// };
-
-// document
-//     .querySelector('.post-comment')
-//     .addEventListener('submit', newFormHandler);
-
+document
+    .querySelector('.saveComment')
+    .addEventListener('submit', CommentButtonHandler);
